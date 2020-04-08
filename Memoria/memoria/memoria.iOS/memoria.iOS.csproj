@@ -5,13 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0524E1F5-5AD0-44E4-8744-B2E119109430}</ProjectGuid>
+    <ProjectGuid>{B27B1A12-0914-4C2F-9162-78A11439785A}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6143fdea-f3c2-4a09-aafa-6e230626515e}</TemplateGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Memoria.iOS</RootNamespace>
+    <RootNamespace>memoria.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Memoria.iOS</AssemblyName>
+    <AssemblyName>memoria.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <ProvisioningType>automatic</ProvisioningType>
@@ -128,9 +128,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Memoria\Memoria.csproj">
-      <Project>{7DCBABB1-F255-460E-9C94-C59B61808A38}</Project>
-      <Name>Memoria</Name>
+    <ProjectReference Include="..\memoria\memoria.csproj">
+      <Project>{305F5413-BAA8-4D26-AACB-C5C375125FBC}</Project>
+      <Name>memoria</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

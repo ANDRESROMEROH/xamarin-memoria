@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace Memoria.iOS
+namespace memoria.iOS
 {
     public class Application
     {

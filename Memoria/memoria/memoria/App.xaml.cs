@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Memoria
+namespace memoria
 {
     public partial class App : Application
     {
