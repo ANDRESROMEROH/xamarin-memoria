@@ -8,54 +8,18 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Juego de Memoria" 
-           FontSize="Title"
+        <Label Text="Memoria" 
+           FontSize="40"
            HorizontalOptions="Center"
-           Margin="30"/>
+           Margin="20"/>
 
-        <Grid ColumnSpacing="10" RowSpacing="15">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button Text="X" Grid.Row="0" Grid.Column="0" />
-            <Button Text="X" Grid.Row="0" Grid.Column="1" />
-            <Button Text="X" Grid.Row="0" Grid.Column="2" />
-            <Button Text="X" Grid.Row="0" Grid.Column="3" />
-            <Button Text="X" Grid.Row="0" Grid.Column="4" />
-            <Button Text="X" Grid.Row="1" Grid.Column="0" />
-            <Button Text="X" Grid.Row="1" Grid.Column="1" />
-            <Button Text="X" Grid.Row="1" Grid.Column="2" />
-            <Button Text="X" Grid.Row="1" Grid.Column="3" />
-            <Button Text="X" Grid.Row="1" Grid.Column="4" />
-            <Button Text="X" Grid.Row="2" Grid.Column="0" />
-            <Button Text="X" Grid.Row="2" Grid.Column="1" />
-            <Button Text="X" Grid.Row="2" Grid.Column="2" />
-            <Button Text="X" Grid.Row="2" Grid.Column="3" />
-            <Button Text="X" Grid.Row="2" Grid.Column="4" />
-            <Button Text="X" Grid.Row="3" Grid.Column="0" />
-            <Button Text="X" Grid.Row="3" Grid.Column="1" />
-            <Button Text="X" Grid.Row="3" Grid.Column="2" />
-            <Button Text="X" Grid.Row="3" Grid.Column="3" />
-            <Button Text="X" Grid.Row="3" Grid.Column="4" />
-            <Button Text="X" Grid.Row="4" Grid.Column="0" />
-            <Button Text="X" Grid.Row="4" Grid.Column="1" />
-            <Button Text="X" Grid.Row="4" Grid.Column="2" />
-            <Button Text="X" Grid.Row="4" Grid.Column="3" />
-            <Button Text="X" Grid.Row="4" Grid.Column="4" />
-        </Grid>
+        <Image x:Name="main_image" />
+        
+        <Button Text="Iniciar" Margin="20" Clicked="Button_Clicked" />
 
-        <Button Text="Iniciar" Margin="30" />
+        <Label Text="Andres Romero - Estefania Murillo ®" 
+           HorizontalOptions="Center"
+           Margin="50" />
     </StackLayout>
 
 </ContentPage>

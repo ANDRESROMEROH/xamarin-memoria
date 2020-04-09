@@ -1,4 +1,5 @@
-﻿using System;
+﻿using memoria.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,9 +14,22 @@ namespace memoria
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        [Obsolete]
         public MainPage()
         {
             InitializeComponent();
+
+            main_image.Source = ImageSource.FromResource(
+                    "memoria.Resources.brain.png"
+            );
         }
+
+        [Obsolete]
+        async void Button_Clicked(object sender, EventArgs e)
+        {
+            var nextPage = new Juego();
+            await Navigation.PushModalAsync(nextPage);
+        }
+
     }
 }
