@@ -31,7 +31,7 @@ namespace memoria.Views
             {
                 Button btn = new Button
                 {
-                    Command = this.ViewModel.CambiarEstadoCommand,
+                    Command = this.ViewModel.JugarTurnoCommand,
                     CommandParameter = ViewModel.Celdas[i].Id
                 };
 

@@ -5,13 +5,26 @@ using memoria.Utils;
 using System.Windows.Input;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System;
+using System.Threading;
 
 namespace memoria.ViewModels
 {
+    [Flags]
+    public enum Turno
+    {
+        Primero,  // 0
+        Segundo,  // 1
+        Tercero,  // 2
+    }
+
     class JuegoViewModel : BaseViewModel
     {
         public ObservableCollection<Celda> Celdas { get; set; }
-        public ICommand CambiarEstadoCommand { get; set; }
+        public ICommand JugarTurnoCommand { get; set; }
+        public Celda CeldaEnJuego { get; set; }
+        public Turno NumTurno { get; set; }
 
         readonly string VALUES = 
             "AAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLLLMMMNNNOOOPPPQQQRRRSSSTTTUUUVVVWWWXXXYYYZZZ";
@@ -26,15 +39,58 @@ namespace memoria.ViewModels
                 char valor = valores.Pop();
                 Celdas.Add(new Celda(i.ToString(), valor.ToString(), Celda.OCULTA));
             }
-            
-            CambiarEstadoCommand = new Command(CambiarEstado);
+
+            CeldaEnJuego = null;
+            NumTurno = Turno.Primero;
+            JugarTurnoCommand = new Command(JugarTurno);
         }
 
-        private void CambiarEstado(object obj)
+        private void JugarTurno(object obj)
         {
-            string id = (string) obj;
+            string id = (string)obj;
             Celda celda = Celdas.ElementAt(int.Parse(id));
 
+            switch (NumTurno)
+            {
+                case Turno.Primero:
+                    JugarPrimerTurno(celda);
+                    break;
+                case Turno.Segundo:
+                    JugarSegundoTurno(celda);
+                    break;
+                case Turno.Tercero:
+                    JugarTercerTurno(celda);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void JugarPrimerTurno(Celda celda)
+        {
+            CambiarEstado(celda);
+            celda.HacerTemporal();
+            CeldaEnJuego = celda;
+            NumTurno = Turno.Segundo;
+        }
+
+        private void JugarSegundoTurno(Celda celda)
+        {
+            CambiarEstado(celda);
+            ValidarCeldaActual(celda);
+            NumTurno = celda.ContenidoOculto == CeldaEnJuego.ContenidoOculto? Turno.Tercero : Turno.Primero;
+        }
+
+        private void JugarTercerTurno(Celda celda)
+        {
+            CambiarEstado(celda);
+            ValidarCeldaActual(celda);
+            ValidarSeleccionExitosa();
+            NumTurno = Turno.Primero;
+        }
+
+        private void CambiarEstado(Celda celda)
+        {
             switch (celda.Estado)
             {
                 case Celda.OCULTA:
@@ -48,7 +104,6 @@ namespace memoria.ViewModels
                 default:
                     break;
             }
-
             
             RaisePropertyChanged("Celdas");
         }
@@ -57,6 +112,39 @@ namespace memoria.ViewModels
         {
             List<char> valores = ListUtils<char>.getRandomElements(VALUES.ToList(), 30);
             return new Stack<char>(valores);
+        }
+
+        private void ValidarCeldaActual(Celda celdaActual)
+        {
+            if (celdaActual.ContenidoOculto == CeldaEnJuego.ContenidoOculto)
+            {
+                celdaActual.HacerTemporal();
+            } else
+            {
+                var task = Task.Run(() =>
+                {
+                    foreach (var celda in Celdas)
+                    {
+                        if (celda.Estado != Celda.FIJADA)
+                        {
+                            celda.Ocultar();
+                        }
+                    }
+                    Thread.Sleep(500); // half a second
+                    RaisePropertyChanged("Celdas");
+                });
+            }
+        }
+
+        private void ValidarSeleccionExitosa()
+        {
+            foreach (var celda in Celdas)
+            {
+                if (celda.Estado == Celda.TEMPORAL)
+                {
+                    celda.HacerFija();
+                }
+            }
         }
 
     }

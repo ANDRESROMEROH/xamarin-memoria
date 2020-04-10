@@ -13,7 +13,8 @@ namespace memoria.Models
 
         public const int OCULTA = 0;
         public const int VISIBLE = 1;
-        public const int FIJADA = 2;
+        public const int TEMPORAL = 2;
+        public const int FIJADA = 3;
 
         public Celda(String Id, String contenidoOculto, int estado)
         {
@@ -32,6 +33,15 @@ namespace memoria.Models
         {
             this.Estado = Celda.VISIBLE;
             this.ContenidoVisible = this.ContenidoOculto;
+        }
+        public void HacerTemporal()
+        {
+            this.Estado = Celda.TEMPORAL;
+        }
+
+        public void HacerFija()
+        {
+            this.Estado = Celda.FIJADA;
         }
 
         public void Ocultar()
