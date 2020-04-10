@@ -22,6 +22,7 @@ namespace memoria.ViewModels
     class JuegoViewModel : BaseViewModel
     {
         public ObservableCollection<Celda> Celdas { get; set; }
+        public ObservableCollection<Celda> Temporales { get; set; }
         public ICommand JugarTurnoCommand { get; set; }
         public Celda CeldaEnJuego { get; set; }
         public Turno NumTurno { get; set; }
@@ -32,6 +33,7 @@ namespace memoria.ViewModels
         public JuegoViewModel()
         {
             this.Celdas = new ObservableCollection<Celda>();
+            this.Temporales = new ObservableCollection<Celda>();
             Stack<char> valores = GenerarValores();
 
             for (int i = 0; i < 30; i++)
@@ -69,8 +71,8 @@ namespace memoria.ViewModels
         private void JugarPrimerTurno(Celda celda)
         {
             CambiarEstado(celda);
-            celda.HacerTemporal();
             CeldaEnJuego = celda;
+            Temporales.Add(celda);
             NumTurno = Turno.Segundo;
         }
 
@@ -78,7 +80,7 @@ namespace memoria.ViewModels
         {
             CambiarEstado(celda);
             ValidarCeldaActual(celda);
-            NumTurno = celda.ContenidoOculto == CeldaEnJuego.ContenidoOculto? Turno.Tercero : Turno.Primero;
+            NumTurno = Turno.Tercero;
         }
 
         private void JugarTercerTurno(Celda celda)
@@ -114,11 +116,22 @@ namespace memoria.ViewModels
             return new Stack<char>(valores);
         }
 
-        private void ValidarCeldaActual(Celda celdaActual)
+        private void ValidarCeldaActual(Celda celda)
         {
-            if (celdaActual.ContenidoOculto == CeldaEnJuego.ContenidoOculto)
+            if (celda.ContenidoOculto == CeldaEnJuego.ContenidoOculto)
             {
-                celdaActual.HacerTemporal();
+                Temporales.Add(celda);
+            }
+        }
+
+        private void ValidarSeleccionExitosa()
+        {
+            if (Temporales.Count() == 3)
+            {
+                foreach (var celda in Temporales)
+                {
+                    celda.HacerFija();
+                }
             } else
             {
                 var task = Task.Run(() =>
@@ -134,17 +147,7 @@ namespace memoria.ViewModels
                     RaisePropertyChanged("Celdas");
                 });
             }
-        }
-
-        private void ValidarSeleccionExitosa()
-        {
-            foreach (var celda in Celdas)
-            {
-                if (celda.Estado == Celda.TEMPORAL)
-                {
-                    celda.HacerFija();
-                }
-            }
+            Temporales.Clear();
         }
 
     }
