@@ -6,13 +6,13 @@
              mc:Ignorable="d"
              x:Class="memoria.Views.Juego">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="6x5"
+        <StackLayout x:Name="layout">
+            <Label Text="Dificultad: 6x5"
                 FontSize="30"
                 HorizontalOptions="CenterAndExpand"
                 Margin="30" />
 
-            <Grid ColumnSpacing="10" RowSpacing="15">
+            <Grid x:Name="Grid" ColumnSpacing="10" RowSpacing="15" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -27,33 +27,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Text="X" Grid.Row="0" Grid.Column="0" />
-                <Button Text="X" Grid.Row="0" Grid.Column="1" />
-                <Button Text="X" Grid.Row="0" Grid.Column="2" />
-                <Button Text="X" Grid.Row="0" Grid.Column="3" />
-                <Button Text="X" Grid.Row="0" Grid.Column="4" />
-                <Button Text="X" Grid.Row="1" Grid.Column="0" />
-                <Button Text="X" Grid.Row="1" Grid.Column="1" />
-                <Button Text="X" Grid.Row="1" Grid.Column="2" />
-                <Button Text="X" Grid.Row="1" Grid.Column="3" />
-                <Button Text="X" Grid.Row="1" Grid.Column="4" />
-                <Button Text="X" Grid.Row="2" Grid.Column="0" />
-                <Button Text="X" Grid.Row="2" Grid.Column="1" />
-                <Button Text="X" Grid.Row="2" Grid.Column="2" />
-                <Button Text="X" Grid.Row="2" Grid.Column="3" />
-                <Button Text="X" Grid.Row="2" Grid.Column="4" />
-                <Button Text="X" Grid.Row="3" Grid.Column="0" />
-                <Button Text="X" Grid.Row="3" Grid.Column="1" />
-                <Button Text="X" Grid.Row="3" Grid.Column="2" />
-                <Button Text="X" Grid.Row="3" Grid.Column="3" />
-                <Button Text="X" Grid.Row="3" Grid.Column="4" />
-                <Button Text="X" Grid.Row="4" Grid.Column="0" />
-                <Button Text="X" Grid.Row="4" Grid.Column="1" />
-                <Button Text="X" Grid.Row="4" Grid.Column="2" />
-                <Button Text="X" Grid.Row="4" Grid.Column="3" />
-                <Button Text="X" Grid.Row="4" Grid.Column="4" />
             </Grid>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

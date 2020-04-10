@@ -6,23 +6,38 @@ namespace memoria.Models
 {
     class Celda
     {
-        char caracter { get; set; }
-        int estado { get; set; } // oculta, visible o fijada
+        public string Id { get; set; }
+        public string ContenidoVisible  { get; set; }
+        public string ContenidoOculto { get; set; }
+        public int Estado { get; set; }
 
-        public readonly static int OCULTA = 0;
-        public readonly static int VISIBLE = 1;
-        public readonly static int TEMPORAL = 2;
-        public readonly static int FIJA = 3;
+        public const int OCULTA = 0;
+        public const int VISIBLE = 1;
+        public const int FIJADA = 2;
 
-        public Celda(char caracter, int estado)
+        public Celda(String Id, String contenidoOculto, int estado)
         {
-            this.caracter = caracter;
-            this.estado = estado;
+            this.Id = Id;
+            this.ContenidoVisible = "";
+            this.ContenidoOculto = contenidoOculto;
+            this.Estado = estado;
         }
 
         public override string ToString()
         {
-            return "caracter: " + this.caracter + ", estado: " + this.estado;
+            return "contenido: " + this.ContenidoOculto + ", estado: " + this.Estado;
+        }
+
+        public void HacerVisible()
+        {
+            this.Estado = Celda.VISIBLE;
+            this.ContenidoVisible = this.ContenidoOculto;
+        }
+
+        public void Ocultar()
+        {
+            this.Estado = Celda.OCULTA;
+            this.ContenidoVisible = "";
         }
     }
 }

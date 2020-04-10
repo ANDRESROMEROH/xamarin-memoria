@@ -1,43 +1,63 @@
 ﻿using memoria.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using memoria.Utils;
+using System.Windows.Input;
+using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 namespace memoria.ViewModels
 {
-    class JuegoViewModel
+    class JuegoViewModel : BaseViewModel
     {
-        Celda [,] celdas { get; set; }
-        //static readonly int MAX_TEMP = 2;
+        public ObservableCollection<Celda> Celdas { get; set; }
+        public ICommand CambiarEstadoCommand { get; set; }
 
         readonly string VALUES = 
             "AAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLLLMMMNNNOOOPPPQQQRRRSSSTTTUUUVVVWWWXXXYYYZZZ";
 
-        public JuegoViewModel() // modo por defecto 5x5
+        public JuegoViewModel()
         {
-            this.celdas = new Celda[6,5];
-            Stack<char> valores = generarValores();
+            this.Celdas = new ObservableCollection<Celda>();
+            Stack<char> valores = GenerarValores();
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 30; i++)
             {
-                for (int j = 0; j < 5; j++)
-                {
-                    char valor = valores.Pop();
-                    celdas[i, j] = new Celda(valor, Celda.OCULTA);
-                }
+                char valor = valores.Pop();
+                Celdas.Add(new Celda(i.ToString(), valor.ToString(), Celda.OCULTA));
             }
+            
+            CambiarEstadoCommand = new Command(CambiarEstado);
         }
 
-        private Stack<char> generarValores()
+        private void CambiarEstado(object obj)
         {
-            List<char> valores = ListUtils<char>.getRandomElements(
-                    VALUES.ToList(),
-                    30
-            );
+            string id = (string) obj;
+            Celda celda = Celdas.ElementAt(int.Parse(id));
 
+            switch (celda.Estado)
+            {
+                case Celda.OCULTA:
+                    celda.HacerVisible();
+                    break;
+
+                case Celda.VISIBLE:
+                    celda.Ocultar();
+                    break;
+
+                default:
+                    break;
+            }
+
+            
+            RaisePropertyChanged("Celdas");
+        }
+
+        private Stack<char> GenerarValores()
+        {
+            List<char> valores = ListUtils<char>.getRandomElements(VALUES.ToList(), 30);
             return new Stack<char>(valores);
         }
+
     }
 }
