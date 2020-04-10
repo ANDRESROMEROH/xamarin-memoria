@@ -37,12 +37,19 @@ namespace memoria.Views
 
                 Binding bindingContenido = new Binding($"Celdas[{i}].ContenidoVisible");
                 Binding bindingHabilitada = new Binding($"Celdas[{i}].Habilitada");
+                Binding bindingColorBorde = new Binding($"Celdas[{i}].ColorEstado");
 
                 bindingContenido.Source = ViewModel;
                 bindingHabilitada.Source = ViewModel;
+                bindingColorBorde.Source = ViewModel;
 
                 btn.SetBinding(Button.TextProperty, bindingContenido);
                 btn.SetBinding(Button.IsEnabledProperty, bindingHabilitada);
+                btn.SetBinding(Button.BorderColorProperty, bindingColorBorde);
+
+                btn.BorderWidth = 3; // 3px border
+                btn.FontAttributes = FontAttributes.Bold;
+                btn.FontSize = 20; // 20px size
                 btns.Add(btn);
             }
 
@@ -59,10 +66,5 @@ namespace memoria.Views
                 }
             }
         }
-
-        //private void Button_Clicked(object sender, EventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine(((Button)sender).Text);
-        //}
     }
 }

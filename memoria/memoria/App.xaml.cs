@@ -9,7 +9,6 @@ namespace memoria
         public App()
         {
             InitializeComponent();
-
             MainPage = new MainPage();
         }
 

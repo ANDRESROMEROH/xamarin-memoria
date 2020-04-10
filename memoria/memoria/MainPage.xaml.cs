@@ -18,7 +18,6 @@ namespace memoria
         public MainPage()
         {
             InitializeComponent();
-
             main_image.Source = ImageSource.FromResource(
                     "memoria.Resources.brain.png"
             );

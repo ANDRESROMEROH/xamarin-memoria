@@ -7,12 +7,12 @@
              x:Class="memoria.Views.Juego">
     <ContentPage.Content>
         <StackLayout x:Name="layout">
-            <Label Text="Dificultad: 6x5"
+            <Label Text="Memoria"
                 FontSize="30"
                 HorizontalOptions="CenterAndExpand"
                 Margin="30" />
 
-            <Grid x:Name="Grid" ColumnSpacing="10" RowSpacing="15" >
+            <Grid x:Name="Grid" ColumnSpacing="8" RowSpacing="13" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -28,6 +28,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
             </Grid>
+            
+            <Label Text="" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace memoria.Models
 {
@@ -10,12 +11,12 @@ namespace memoria.Models
         public string ContenidoVisible  { get; set; }
         public string ContenidoOculto { get; set; }
         public int Estado { get; set; }
+        public Color ColorEstado { get; set; }
         public bool Habilitada { get; set; }
 
         public const int OCULTA = 0;
         public const int VISIBLE = 1;
-        public const int TEMPORAL = 2;
-        public const int FIJA = 3;
+        public const int FIJA = 2;
 
         public Celda(String Id, String contenidoOculto, int estado)
         {
@@ -24,6 +25,7 @@ namespace memoria.Models
             this.ContenidoOculto = contenidoOculto;
             this.Estado = estado;
             this.Habilitada = true;
+            this.ColorEstado = Color.Transparent;
         }
 
         public override string ToString()
@@ -36,15 +38,13 @@ namespace memoria.Models
             this.Estado = Celda.VISIBLE;
             this.ContenidoVisible = this.ContenidoOculto;
             this.Habilitada = false;
-        }
-        public void HacerTemporal()
-        {
-            this.Estado = Celda.TEMPORAL;
+            this.ColorEstado = Color.Yellow;
         }
 
         public void HacerFija()
         {
             this.Estado = Celda.FIJA;
+            this.ColorEstado = Color.LightGreen;
         }
 
         public void Ocultar()
@@ -52,6 +52,7 @@ namespace memoria.Models
             this.Estado = Celda.OCULTA;
             this.ContenidoVisible = "";
             this.Habilitada = true;
+            this.ColorEstado = Color.Transparent;
         }
     }
 }

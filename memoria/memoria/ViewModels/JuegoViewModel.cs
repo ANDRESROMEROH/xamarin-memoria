@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System;
 using System.Threading;
+using memoria.Views;
 
 namespace memoria.ViewModels
 {
@@ -88,6 +89,7 @@ namespace memoria.ViewModels
             CambiarEstado(celda);
             ValidarCeldaActual(celda);
             ValidarSeleccionExitosa();
+            ValidarFinJuego();
             NumTurno = Turno.Primero;
         }
 
@@ -132,6 +134,7 @@ namespace memoria.ViewModels
                 {
                     celda.HacerFija();
                 }
+                RaisePropertyChanged("Celdas");
             } else
             {
                 var task = Task.Run(() =>
@@ -148,6 +151,33 @@ namespace memoria.ViewModels
                 });
             }
             Temporales.Clear();
+        }
+
+        private async void ValidarFinJuego()
+        {
+            bool final = Celdas.All((Celda celda) =>
+            {
+                return celda.Estado == Celda.FIJA;
+            });
+
+            if (final)
+            {
+                bool jugarDeNuevo = await Application.Current.MainPage.DisplayAlert(
+                    "Felicidades 🎉", 
+                    "Has ganado!!! 😀, Quieres volver a jugar ?", 
+                    "Si", 
+                    "No"
+                );
+
+                if (jugarDeNuevo)
+                {
+                    await Application.Current.MainPage.Navigation.PushModalAsync(new Juego());
+                } 
+                else
+                {
+                    await Application.Current.MainPage.Navigation.PushModalAsync(new MainPage());
+                }
+            }
         }
 
     }

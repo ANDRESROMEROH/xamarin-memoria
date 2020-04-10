@@ -14,7 +14,7 @@
            Margin="20"/>
 
         <Image x:Name="main_image" />
-        
+
         <Button Text="Iniciar" Margin="20" Clicked="Button_Clicked" />
 
         <Label Text="Andres Romero - Estefania Murillo ®" 
