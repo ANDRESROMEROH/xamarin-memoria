@@ -125,7 +125,7 @@ namespace memoria.ViewModels
                 {
                     foreach (var celda in Celdas)
                     {
-                        if (celda.Estado != Celda.FIJADA)
+                        if (celda.Estado != Celda.FIJA)
                         {
                             celda.Ocultar();
                         }

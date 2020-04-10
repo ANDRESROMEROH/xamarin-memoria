@@ -10,11 +10,12 @@ namespace memoria.Models
         public string ContenidoVisible  { get; set; }
         public string ContenidoOculto { get; set; }
         public int Estado { get; set; }
+        public bool Habilitada { get; set; }
 
         public const int OCULTA = 0;
         public const int VISIBLE = 1;
         public const int TEMPORAL = 2;
-        public const int FIJADA = 3;
+        public const int FIJA = 3;
 
         public Celda(String Id, String contenidoOculto, int estado)
         {
@@ -22,6 +23,7 @@ namespace memoria.Models
             this.ContenidoVisible = "";
             this.ContenidoOculto = contenidoOculto;
             this.Estado = estado;
+            this.Habilitada = true;
         }
 
         public override string ToString()
@@ -33,6 +35,7 @@ namespace memoria.Models
         {
             this.Estado = Celda.VISIBLE;
             this.ContenidoVisible = this.ContenidoOculto;
+            this.Habilitada = false;
         }
         public void HacerTemporal()
         {
@@ -41,13 +44,14 @@ namespace memoria.Models
 
         public void HacerFija()
         {
-            this.Estado = Celda.FIJADA;
+            this.Estado = Celda.FIJA;
         }
 
         public void Ocultar()
         {
             this.Estado = Celda.OCULTA;
             this.ContenidoVisible = "";
+            this.Habilitada = true;
         }
     }
 }

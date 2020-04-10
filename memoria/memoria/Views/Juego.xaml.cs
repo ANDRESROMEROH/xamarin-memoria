@@ -35,9 +35,14 @@ namespace memoria.Views
                     CommandParameter = ViewModel.Celdas[i].Id
                 };
 
-                Binding binding = new Binding($"Celdas[{i}].ContenidoVisible");
-                binding.Source = ViewModel; // {binding data}
-                btn.SetBinding(Button.TextProperty, binding);
+                Binding bindingContenido = new Binding($"Celdas[{i}].ContenidoVisible");
+                Binding bindingHabilitada = new Binding($"Celdas[{i}].Habilitada");
+
+                bindingContenido.Source = ViewModel;
+                bindingHabilitada.Source = ViewModel;
+
+                btn.SetBinding(Button.TextProperty, bindingContenido);
+                btn.SetBinding(Button.IsEnabledProperty, bindingHabilitada);
                 btns.Add(btn);
             }
 
