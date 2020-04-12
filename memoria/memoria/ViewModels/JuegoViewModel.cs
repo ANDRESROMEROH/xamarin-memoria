@@ -17,24 +17,22 @@ namespace memoria.ViewModels
     {
         Primero,  // 0
         Segundo,  // 1
-        Tercero,  // 2
     }
 
     class JuegoViewModel : BaseViewModel
     {
         public ObservableCollection<Celda> Celdas { get; set; }
-        public ObservableCollection<Celda> Temporales { get; set; }
-        public ICommand JugarTurnoCommand { get; set; }
-        public Celda CeldaEnJuego { get; set; }
+        public Celda PrimeraCelda { get; set; }
+        public Celda SegundaCelda { get; set; }
         public Turno NumTurno { get; set; }
+        public ICommand JugarTurnoCommand { get; set; }
 
         readonly string VALUES = 
-            "AAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLLLMMMNNNOOOPPPQQQRRRSSSTTTUUUVVVWWWXXXYYYZZZ";
+            "AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ";
 
         public JuegoViewModel()
         {
             this.Celdas = new ObservableCollection<Celda>();
-            this.Temporales = new ObservableCollection<Celda>();
             Stack<char> valores = GenerarValores();
 
             for (int i = 0; i < 30; i++)
@@ -43,7 +41,8 @@ namespace memoria.ViewModels
                 Celdas.Add(new Celda(i.ToString(), valor.ToString(), Celda.OCULTA));
             }
 
-            CeldaEnJuego = null;
+            PrimeraCelda = null;
+            SegundaCelda = null;
             NumTurno = Turno.Primero;
             JugarTurnoCommand = new Command(JugarTurno);
         }
@@ -61,9 +60,6 @@ namespace memoria.ViewModels
                 case Turno.Segundo:
                     JugarSegundoTurno(celda);
                     break;
-                case Turno.Tercero:
-                    JugarTercerTurno(celda);
-                    break;
                 default:
                     break;
             }
@@ -72,22 +68,14 @@ namespace memoria.ViewModels
         private void JugarPrimerTurno(Celda celda)
         {
             CambiarEstado(celda);
-            CeldaEnJuego = celda;
-            Temporales.Add(celda);
+            PrimeraCelda = celda;
             NumTurno = Turno.Segundo;
         }
 
         private void JugarSegundoTurno(Celda celda)
         {
             CambiarEstado(celda);
-            ValidarCeldaActual(celda);
-            NumTurno = Turno.Tercero;
-        }
-
-        private void JugarTercerTurno(Celda celda)
-        {
-            CambiarEstado(celda);
-            ValidarCeldaActual(celda);
+            SegundaCelda = celda;
             ValidarSeleccionExitosa();
             ValidarFinJuego();
             NumTurno = Turno.Primero;
@@ -118,22 +106,12 @@ namespace memoria.ViewModels
             return new Stack<char>(valores);
         }
 
-        private void ValidarCeldaActual(Celda celda)
-        {
-            if (celda.ContenidoOculto == CeldaEnJuego.ContenidoOculto)
-            {
-                Temporales.Add(celda);
-            }
-        }
-
         private void ValidarSeleccionExitosa()
         {
-            if (Temporales.Count() == 3)
+            if (PrimeraCelda.ContenidoOculto == SegundaCelda.ContenidoOculto)
             {
-                foreach (var celda in Temporales)
-                {
-                    celda.HacerFija();
-                }
+                PrimeraCelda.HacerFija();
+                SegundaCelda.HacerFija();
                 RaisePropertyChanged("Celdas");
             } else
             {
@@ -150,7 +128,8 @@ namespace memoria.ViewModels
                     RaisePropertyChanged("Celdas");
                 });
             }
-            Temporales.Clear();
+            PrimeraCelda = null;
+            SegundaCelda = null;
         }
 
         private async void ValidarFinJuego()
